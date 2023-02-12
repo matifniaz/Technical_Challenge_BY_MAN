@@ -1,0 +1,15 @@
+Prerequisite:
+-------------
+>. Make sure you have NodeJS installed
+>. 'newman' is installed (https://www.npmjs.com/package/newman)
+>. 'newman-reporter-htmlextra' is installed (https://www.npmjs.com/package/newman-reporter-htmlextra)
+
+Run Postman Collection:
+----------------------
+
+Go To Collection Folder form CLI
+
+Run Below Commands:
+--------------------
+
+newman run "OneFootball_API-Automation.postman_collection.json" -r cli,json,junit,htmlextra,progress, --color on --reporter-htmlextra-title "OneFootball-API-Automation" --reporter-htmlextra-omitHeaders --reporter-htmlextra-showFolderDescription --reporter-htmlextra-browserTitle "OneFootball-API-Automation" --reporter-htmlextra-testPaging --reporter-htmlextra-export ./newman/OneFootball-API.html --reporter-htmlextra-logs

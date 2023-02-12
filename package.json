@@ -1,0 +1,19 @@
+{
+  "name": "automation_cypress_api",
+  "version": "1.0.0",
+  "description": "One Football - API Automation Testing",
+  "main": "index.js",
+  "scripts": {
+    "cypress:execution": "cypress run"
+  },
+  "keywords": [],
+  "author": "MAN - Muhammad Atif Niaz",
+  "license": "ISC",
+  "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
+    "chai-json-schema": "^1.5.1",
+    "cypress": "^12.5.1",
+    "cypress-mochawesome-reporter": "^3.3.0",
+    "cypress-plugin-api": "^2.10.3"
+  }
+}

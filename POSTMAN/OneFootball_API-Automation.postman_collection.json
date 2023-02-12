@@ -1,0 +1,1434 @@
+{
+	"info": {
+		"_postman_id": "4be51e89-8006-4e46-9701-85cabb5659e5",
+		"name": "OneFootball_API-Automation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3750536"
+	},
+	"item": [
+		{
+			"name": "Services",
+			"item": [
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "Create Services-Empty",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.collectionVariables.set(\"sname\", pm.variables.replaceIn('{{$randomBsNoun}}'));"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Verify Status Code 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify Error Detials\", function () {\r",
+											"   pm.expect(pm.response.json().name).to.equal(\"BadRequest\");\r",
+											"   pm.expect(pm.response.json().message).to.equal(\"Invalid Parameters\");\r",
+											"   pm.expect(pm.response.json().code).to.equal(400);\r",
+											"   pm.expect(pm.response.json().className).to.equal(\"bad-request\");\r",
+											"   pm.expect(pm.response.json().errors[0]).to.equal(\"'name' should NOT be shorter than 1 characters\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{      \r\n\t  \"name\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/services",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"services"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Services-without Parameter",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.collectionVariables.set(\"sname\", pm.variables.replaceIn('{{$randomBsNoun}}'));"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Verify Status Code 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify Error Detials\", function () {\r",
+											"   pm.expect(pm.response.json().name).to.equal(\"BadRequest\");\r",
+											"   pm.expect(pm.response.json().message).to.equal(\"Invalid Parameters\");\r",
+											"   pm.expect(pm.response.json().code).to.equal(400);\r",
+											"   pm.expect(pm.response.json().className).to.equal(\"bad-request\");\r",
+											"   pm.expect(pm.response.json().errors[0]).to.equal(\"should have required property 'name'\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{      \r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/services",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"services"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Services-SpecialCharacter",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.collectionVariables.set(\"sname\",\"@#$%^&*(&!@~\");"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// pm.test(\"Verify Status Code 400\", function () {\r",
+											"//     pm.response.to.have.status(400);\r",
+											"// });\r",
+											"\r",
+											"\r",
+											"// pm.test(\"Verify Error Detials\", function () {\r",
+											"//    pm.expect(pm.response.json().name).to.equal(\"BadRequest\");\r",
+											"//    pm.expect(pm.response.json().message).to.equal(\"Invalid Parameters\");\r",
+											"//    pm.expect(pm.response.json().code).to.equal(400);\r",
+											"//    pm.expect(pm.response.json().className).to.equal(\"bad-request\");\r",
+											"//    pm.expect(pm.response.json().errors[0]).to.equal(\"'name' should NOT be shorter than 1 characters\");\r",
+											"// });\r",
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Name field shoud not contains invalid characters\", () => {\r",
+											"   pm.expect(/^[0-9a-zA-Z\\-_]+$/.test(pm.response.json().name)).to.be.true;\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{      \r\n\t  \"name\": \"{{sname}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/services",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"services"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Services-Invalid Data Type- integer",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.collectionVariables.set(\"sname\", pm.variables.replaceIn('{{$randomBsNoun}}'));"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Verify Status Code 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify Error Detials\", function () {\r",
+											"   pm.expect(pm.response.json().name).to.equal(\"BadRequest\");\r",
+											"   pm.expect(pm.response.json().message).to.equal(\"Invalid Parameters\");\r",
+											"   pm.expect(pm.response.json().code).to.equal(400);\r",
+											"   pm.expect(pm.response.json().className).to.equal(\"bad-request\");\r",
+											"   pm.expect(pm.response.json().errors[0]).to.equal(\"'name' should be string\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{      \r\n\t  \"name\": 2000\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/services",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"services"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Services-Valid Data",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.collectionVariables.set(\"sname\", pm.variables.replaceIn('{{$randomBsNoun}}'));"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"//pm.collectionVariables.set(\"P_name\",  pm.response.json().name);\r",
+											"\r",
+											"//pm.collectionVariables.set(\"variable_key\", \"variable_value\");\r",
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Verify Service Id/Name\", function () {\r",
+											"    pm.expect(pm.response.json().id).not.equal(null);\r",
+											"    pm.expect(pm.response.json().id).to.be.a(\"number\");\r",
+											"    console.log(\"s_id\",  pm.response.json().id)\r",
+											"    pm.collectionVariables.set(\"s_id\",  pm.response.json().id);\r",
+											"\r",
+											"    pm.expect(pm.response.json().name).to.be.a(\"string\");\r",
+											"    pm.expect(pm.response.json().name).to.equal(pm.collectionVariables.get(\"sname\"));\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{      \r\n\t  \"name\": \"{{sname}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/services",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"services"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Service - Page Not Found",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Verify Status Code 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify Error Detials\", function () {\r",
+											"   pm.expect(pm.response.json().name).to.equal(\"NotFound\");\r",
+											"   pm.expect(pm.response.json().message).to.include(\"Page not found\");\r",
+											"   pm.expect(pm.response.json().code).to.equal(404);\r",
+											"   pm.expect(pm.response.json().className).to.equal(\"not-found\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/services1",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"services1"
+									],
+									"query": [
+										{
+											"key": "$limit",
+											"value": "29",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PATCH",
+					"item": [
+						{
+							"name": "Update Services-Empty",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.collectionVariables.set(\"sname\", pm.variables.replaceIn('{{$randomBsNoun}}'));"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Verify Status Code 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify Error Detials\", function () {\r",
+											"   pm.expect(pm.response.json().name).to.equal(\"BadRequest\");\r",
+											"   pm.expect(pm.response.json().message).to.equal(\"Invalid Parameters\");\r",
+											"   pm.expect(pm.response.json().code).to.equal(400);\r",
+											"   pm.expect(pm.response.json().className).to.equal(\"bad-request\");\r",
+											"   pm.expect(pm.response.json().errors[0]).to.equal(\"'name' should NOT be shorter than 1 characters\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{      \r\n\t  \"name\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/services/{{s_id}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"services",
+										"{{s_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Services-Without Paramnetes",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.collectionVariables.set(\"sname\", pm.variables.replaceIn('{{$randomBsNoun}}'));"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Verify Status Code 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify Error Detials\", function () {\r",
+											"   pm.expect(pm.response.json().name).to.equal(\"BadRequest\");\r",
+											"   pm.expect(pm.response.json().message).to.equal(\"Invalid Parameters\");\r",
+											"   pm.expect(pm.response.json().code).to.equal(400);\r",
+											"   pm.expect(pm.response.json().className).to.equal(\"bad-request\");\r",
+											"   pm.expect(pm.response.json().errors[0]).to.equal(\"'name' should NOT be shorter than 1 characters\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{      \r\n\t\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/services/{{s_id}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"services",
+										"{{s_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Services-SpecialCharacter",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.collectionVariables.set(\"sname\",\"@#$%^&*(&!@~\");"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// pm.test(\"Verify Status Code 400\", function () {\r",
+											"//     pm.response.to.have.status(400);\r",
+											"// });\r",
+											"\r",
+											"\r",
+											"// pm.test(\"Verify Error Detials\", function () {\r",
+											"//    pm.expect(pm.response.json().name).to.equal(\"BadRequest\");\r",
+											"//    pm.expect(pm.response.json().message).to.equal(\"Invalid Parameters\");\r",
+											"//    pm.expect(pm.response.json().code).to.equal(400);\r",
+											"//    pm.expect(pm.response.json().className).to.equal(\"bad-request\");\r",
+											"//    pm.expect(pm.response.json().errors[0]).to.equal(\"'name' should NOT be shorter than 1 characters\");\r",
+											"// });\r",
+											"\r",
+											"pm.test(\"Name field shoud not contains invalid characters\", () => {\r",
+											"   pm.expect(/^[0-9a-zA-Z\\-_]+$/.test(pm.response.json().name)).to.be.true;\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{      \r\n\t  \"name\": \"{{sname}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/services/{{s_id}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"services",
+										"{{s_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Services-Invalid Data Type- integer",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.collectionVariables.set(\"sname\", pm.variables.replaceIn('{{$randomBsNoun}}'));"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Verify Status Code 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify Error Detials\", function () {\r",
+											"   pm.expect(pm.response.json().name).to.equal(\"BadRequest\");\r",
+											"   pm.expect(pm.response.json().message).to.equal(\"Invalid Parameters\");\r",
+											"   pm.expect(pm.response.json().code).to.equal(400);\r",
+											"   pm.expect(pm.response.json().className).to.equal(\"bad-request\");\r",
+											"   pm.expect(pm.response.json().errors[0]).to.equal(\"'name' should be string\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{      \r\n\t  \"name\": 2000\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/services/{{s_id}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"services",
+										"{{s_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Services-Invalid Data Type- invalid ID",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.collectionVariables.set(\"sname\", pm.variables.replaceIn('{{$randomBsNoun}}'));"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Verify Status Code 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify Error Detials\", function () {\r",
+											"   pm.expect(pm.response.json().name).to.equal(\"NotFound\");\r",
+											"   pm.expect(pm.response.json().message).to.include(\"No record found for id \");\r",
+											"   pm.expect(pm.response.json().code).to.equal(404);\r",
+											"   pm.expect(pm.response.json().className).to.equal(\"not-found\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{      \r\n\t  \"name\": 2000\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/services/invalid",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"services",
+										"invalid"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Service - Page Not Found",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Verify Status Code 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify Error Detials\", function () {\r",
+											"   pm.expect(pm.response.json().name).to.equal(\"NotFound\");\r",
+											"   pm.expect(pm.response.json().message).to.include(\"Page not found\");\r",
+											"   pm.expect(pm.response.json().code).to.equal(404);\r",
+											"   pm.expect(pm.response.json().className).to.equal(\"not-found\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/services1",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"services1"
+									],
+									"query": [
+										{
+											"key": "$limit",
+											"value": "29",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Services-Valid Data",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.collectionVariables.set(\"sname\", pm.variables.replaceIn('{{$randomBsNoun}}'));"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"//pm.collectionVariables.set(\"P_name\",  pm.response.json().name);\r",
+											"\r",
+											"//pm.collectionVariables.set(\"variable_key\", \"variable_value\");\r",
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Verify Service Id/Name\", function () {\r",
+											"    pm.expect(pm.response.json().id).not.equal(null);\r",
+											"    pm.expect(pm.response.json().id).to.be.a(\"number\");\r",
+											"    console.log(\"s_id\",  pm.response.json().id)\r",
+											"    pm.collectionVariables.set(\"s_id\",  pm.response.json().id);\r",
+											"\r",
+											"    pm.expect(pm.response.json().name).to.be.a(\"string\");\r",
+											"    pm.expect(pm.response.json().name).to.equal(pm.collectionVariables.get(\"sname\"));\r",
+											"     pm.collectionVariables.set(\"sname\",  pm.response.json().name);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{      \r\n\t  \"name\": \"{{sname}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/services/{{s_id}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"services",
+										"{{s_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "Get All Services",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"\r",
+											"pm.test(\"Verify Status Code\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"console.log(pm.response.json().data.length)\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify Error Detials\", function () {\r",
+											"    pm.expect(pm.response.json().total).not.equal(null);\r",
+											"    pm.expect(pm.response.json().total).to.be.a(\"number\");\r",
+											"\r",
+											"    pm.expect(pm.response.json().limit).not.equal(null);\r",
+											"    pm.expect(pm.response.json().limit).to.be.a(\"number\");\r",
+											"\r",
+											"    pm.expect(pm.response.json().skip).not.equal(null);\r",
+											"    pm.expect(pm.response.json().skip).to.be.a(\"number\");\r",
+											"\r",
+											"    pm.expect(pm.response.json().data).to.be.an(\"array\")\r",
+											"\r",
+											"    pm.expect(pm.response.json().data.length).to.equal(pm.response.json().limit);\r",
+											"\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/services",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"services"
+									],
+									"query": [
+										{
+											"key": "$limit",
+											"value": "29",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Services limit 20",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"\r",
+											"pm.test(\"Verify Status Code\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"console.log(pm.response.json().data.length)\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify Responce Code\", function () {\r",
+											"    pm.expect(pm.response.json().total).not.equal(null);\r",
+											"    pm.expect(pm.response.json().total).to.be.a(\"number\");\r",
+											"\r",
+											"    pm.expect(pm.response.json().limit).not.equal(null);\r",
+											"    pm.expect(pm.response.json().limit).to.be.a(\"number\");\r",
+											"    pm.expect(pm.response.json().limit).to.equal(pm.collectionVariables.get(\"s_limit\"));\r",
+											"\r",
+											"    pm.expect(pm.response.json().skip).not.equal(null);\r",
+											"    pm.expect(pm.response.json().skip).to.be.a(\"number\");\r",
+											"\r",
+											"    pm.expect(pm.response.json().data).to.be.an(\"array\")\r",
+											"\r",
+											"    pm.expect(pm.response.json().data.length).to.equal(pm.response.json().limit);\r",
+											"\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.collectionVariables.set(\"s_limit\", 20);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/services?$limit={{s_limit}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"services"
+									],
+									"query": [
+										{
+											"key": "$limit",
+											"value": "{{s_limit}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Services limit  0",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"\r",
+											"pm.test(\"Verify Status Code\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"console.log(pm.response.json().data.length)\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify Responce Code\", function () {\r",
+											"    pm.expect(pm.response.json().total).not.equal(null);\r",
+											"    pm.expect(pm.response.json().total).to.be.a(\"number\");\r",
+											"\r",
+											"    pm.expect(pm.response.json().limit).not.equal(null);\r",
+											"    pm.expect(pm.response.json().limit).to.be.a(\"number\");\r",
+											"    pm.expect(pm.response.json().limit).to.equal(pm.collectionVariables.get(\"s_limit\"));\r",
+											"\r",
+											"    pm.expect(pm.response.json().skip).not.equal(null);\r",
+											"    pm.expect(pm.response.json().skip).to.be.a(\"number\");\r",
+											"\r",
+											"    pm.expect(pm.response.json().data).to.be.an(\"array\")\r",
+											"\r",
+											"    pm.expect(pm.response.json().data.length).to.equal(pm.response.json().limit);\r",
+											"    pm.expect(pm.response.json().data.length).to.equal(0);\r",
+											"    \r",
+											"\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.collectionVariables.set(\"s_limit\", 0);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/services?$limit={{s_limit}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"services"
+									],
+									"query": [
+										{
+											"key": "$limit",
+											"value": "{{s_limit}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Services limit  null",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"\r",
+											"pm.test(\"Verify Status Code - 500\", function () {\r",
+											"    pm.response.to.have.status(500);\r",
+											"});\r",
+											"console.log(pm.response.json().data.length)\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify Error Detials\", function () {\r",
+											"   pm.expect(pm.response.json().name).to.equal(\"GeneralError\");\r",
+											"   pm.expect(pm.response.json().message).to.equal(\"SQLITE_ERROR: no such column: NaN\");\r",
+											"   pm.expect(pm.response.json().code).to.equal(500);\r",
+											"   pm.expect(pm.response.json().className).to.equal(\"general-error\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.collectionVariables.set(\"s_limit\", null);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/services?$limit={{s_limit}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"services"
+									],
+									"query": [
+										{
+											"key": "$limit",
+											"value": "{{s_limit}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Service By invalid id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Verify Status Code 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify Error Detials\", function () {\r",
+											"   pm.expect(pm.response.json().name).to.equal(\"NotFound\");\r",
+											"   pm.expect(pm.response.json().message).to.include(\"No record found for id \");\r",
+											"   pm.expect(pm.response.json().code).to.equal(404);\r",
+											"   pm.expect(pm.response.json().className).to.equal(\"not-found\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/services/invalid",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"services",
+										"invalid"
+									],
+									"query": [
+										{
+											"key": "$limit",
+											"value": "29",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Service By Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"//pm.collectionVariables.set(\"P_name\",  pm.response.json().name);\r",
+											"\r",
+											"//pm.collectionVariables.set(\"variable_key\", \"variable_value\");\r",
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Verify Service Id/Name\", function () {\r",
+											"    pm.expect(pm.response.json().id).not.equal(null);\r",
+											"    pm.expect(pm.response.json().id).to.be.a(\"number\");\r",
+											"    console.log(\"s_id\",  pm.response.json().id)\r",
+											"    //pm.collectionVariables.set(\"s_id\",  pm.response.json().id);\r",
+											"\r",
+											"    pm.expect(pm.response.json().name).to.be.a(\"string\");\r",
+											"    pm.expect(pm.response.json().name).to.equal(pm.collectionVariables.get(\"sname\"));\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/services/{{s_id}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"services",
+										"{{s_id}}"
+									],
+									"query": [
+										{
+											"key": "$limit",
+											"value": "29",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Service - Page Not Found",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Verify Status Code 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify Error Detials\", function () {\r",
+											"   pm.expect(pm.response.json().name).to.equal(\"NotFound\");\r",
+											"   pm.expect(pm.response.json().message).to.include(\"Page not found\");\r",
+											"   pm.expect(pm.response.json().code).to.equal(404);\r",
+											"   pm.expect(pm.response.json().className).to.equal(\"not-found\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/services1",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"services1"
+									],
+									"query": [
+										{
+											"key": "$limit",
+											"value": "29",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DELETE",
+					"item": [
+						{
+							"name": "Delete Services - invalid Id",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Verify Status Code 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify Error Detials\", function () {\r",
+											"   pm.expect(pm.response.json().name).to.equal(\"NotFound\");\r",
+											"   pm.expect(pm.response.json().message).to.include(\"No record found for id \");\r",
+											"   pm.expect(pm.response.json().code).to.equal(404);\r",
+											"   pm.expect(pm.response.json().className).to.equal(\"not-found\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/services/invalid",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"services",
+										"invalid"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Service - Page Not Found",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Verify Status Code 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify Error Detials\", function () {\r",
+											"   pm.expect(pm.response.json().name).to.equal(\"NotFound\");\r",
+											"   pm.expect(pm.response.json().message).to.include(\"Page not found\");\r",
+											"   pm.expect(pm.response.json().code).to.equal(404);\r",
+											"   pm.expect(pm.response.json().className).to.equal(\"not-found\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/services1",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"services1"
+									],
+									"query": [
+										{
+											"key": "$limit",
+											"value": "29",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Services-Valid Data",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"//pm.collectionVariables.set(\"P_name\",  pm.response.json().name);\r",
+											"\r",
+											"//pm.collectionVariables.set(\"variable_key\", \"variable_value\");\r",
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Verify Service Id/Name\", function () {\r",
+											"    pm.expect(pm.response.json().id).not.equal(null);\r",
+											"    pm.expect(pm.response.json().id).to.be.a(\"number\");\r",
+											"    console.log(\"s_id\",  pm.response.json().id)\r",
+											"    pm.collectionVariables.set(\"s_id\",  pm.response.json().id);\r",
+											"\r",
+											"    pm.expect(pm.response.json().name).to.be.a(\"string\");\r",
+											"    pm.expect(pm.response.json().name).to.equal(pm.collectionVariables.get(\"sname\"));\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/services/{{s_id}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"services",
+										"{{s_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Service By Id Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Verify Status Code 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify Error Detials\", function () {\r",
+											"   pm.expect(pm.response.json().name).to.equal(\"NotFound\");\r",
+											"   pm.expect(pm.response.json().message).to.include(\"No record found for id \");\r",
+											"   pm.expect(pm.response.json().code).to.equal(404);\r",
+											"   pm.expect(pm.response.json().className).to.equal(\"not-found\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/services/{{s_id}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"services",
+										"{{s_id}}"
+									],
+									"query": [
+										{
+											"key": "$limit",
+											"value": "29",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.collectionVariables.set(\"URL\", \"localhost:3030\");"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL",
+			"value": ""
+		},
+		{
+			"key": "P_id",
+			"value": ""
+		},
+		{
+			"key": "P_name",
+			"value": ""
+		},
+		{
+			"key": "sname",
+			"value": ""
+		},
+		{
+			"key": "variable_key",
+			"value": ""
+		},
+		{
+			"key": "s_id",
+			"value": ""
+		},
+		{
+			"key": "s_limit",
+			"value": ""
+		},
+		{
+			"key": "s_skip",
+			"value": ""
+		}
+	]
+}
